@@ -15,16 +15,10 @@
             "email": "Propaganistas@users.noreply.github.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/Propaganistas/intl"
-        }
-    ],
     "require": {
         "php": ">=5.5.0",
         "laravel/framework": "^5.0",
-        "commerceguys/intl": "dev-master@dev",
+        "commerceguys/intl": "^0.7",
         "jenssegers/date": "^3.2"
     },
     "require-dev": {
