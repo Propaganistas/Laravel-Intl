@@ -38,4 +38,11 @@
             "Propaganistas\\LaravelIntl\\Tests\\": "tests/"
         }
     }
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Propaganistas\\LaravelIntl\\IntlServiceProvider"
+            ]
+        }
+    },
 }
