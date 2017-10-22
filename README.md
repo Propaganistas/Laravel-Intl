@@ -30,12 +30,16 @@ composer require propaganistas/laravel-intl
 ```
 
 In your app config, add the Service Provider to the `$providers` array
-
+#### Laravel
  ```php
 'providers' => [
     ...
     Propaganistas\LaravelIntl\IntlServiceProvider::class,
 ],
+```
+#### Lumen
+ ```php
+$app->register(Propaganistas\LaravelIntl\IntlServiceProvider::class);
 ```
 
 ### Usage
@@ -45,7 +49,7 @@ In your app config, add the Service Provider to the `$providers` array
 #### Country
 
 Output localized country names.
-
+#### Laravel
 ```php
 use Propaganistas\LaravelIntl\Facades\Country;
 
@@ -65,7 +69,16 @@ country('US'); // United States
 country()->currency('US'); // USD
 country()->all(); // ['US' => 'United States', 'BE' => 'Belgium', ...]
 ```
+#### Lumen
+```php
+use Propaganistas\LaravelIntl\Facades\Country;
 
+// Application locale: en
+Country::setLocale('hi-IN');
+Country::name('US'); // United States
+Country::currency('US'); // USD
+Country::all(); // ['US' => 'United States', 'BE' => 'Belgium', ...]
+```
 #### Currency
 
 Output localized currency names and format currency amounts into their localized pattern.
