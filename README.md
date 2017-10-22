@@ -28,9 +28,9 @@ Run the following command to install the latest version of the package
 ```bash
 composer require propaganistas/laravel-intl
 ```
-
-In your app config, add the Service Provider to the `$providers` array
 #### Laravel
+In your app config, add the Service Provider to the `$providers` array
+
  ```php
 'providers' => [
     ...
@@ -38,6 +38,8 @@ In your app config, add the Service Provider to the `$providers` array
 ],
 ```
 #### Lumen
+In `bootstrap/app.php`, register the Service Provider
+
  ```php
 $app->register(Propaganistas\LaravelIntl\IntlServiceProvider::class);
 ```
@@ -49,7 +51,6 @@ $app->register(Propaganistas\LaravelIntl\IntlServiceProvider::class);
 #### Country
 
 Output localized country names.
-#### Laravel
 ```php
 use Propaganistas\LaravelIntl\Facades\Country;
 
@@ -69,16 +70,7 @@ country('US'); // United States
 country()->currency('US'); // USD
 country()->all(); // ['US' => 'United States', 'BE' => 'Belgium', ...]
 ```
-#### Lumen
-```php
-use Propaganistas\LaravelIntl\Facades\Country;
 
-// Application locale: en
-Country::setLocale('hi-IN');
-Country::name('US'); // United States
-Country::currency('US'); // USD
-Country::all(); // ['US' => 'United States', 'BE' => 'Belgium', ...]
-```
 #### Currency
 
 Output localized currency names and format currency amounts into their localized pattern.
