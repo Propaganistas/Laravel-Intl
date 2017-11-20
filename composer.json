@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": ">=5.5.0",
-        "laravel/framework": ">=5.0,<5.6",
+        "illuminate/container": ">=5.0,<5.6",
         "commerceguys/intl": "^0.7.3",
         "jenssegers/date": "^3.2"
     },
