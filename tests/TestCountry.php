@@ -64,7 +64,7 @@ class TestCountry extends TestCase
     public function testGet()
     {
         $country = Country::get('BE');
-        $this->assertEquals('CommerceGuys\Intl\Country\Country', get_class($country));
+        $this->assertEquals('CommerceGuys\Addressing\Country\Country', get_class($country));
         $this->assertEquals('BE', $country->getCountryCode());
     }
 

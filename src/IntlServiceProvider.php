@@ -1,7 +1,7 @@
 <?php namespace Propaganistas\LaravelIntl;
 
 use Carbon\Carbon;
-use CommerceGuys\Intl\Country\CountryRepository;
+use CommerceGuys\Addressing\Country\CountryRepository;
 use CommerceGuys\Intl\Currency\CurrencyRepository;
 use CommerceGuys\Intl\Language\LanguageRepository;
 use CommerceGuys\Intl\NumberFormat\NumberFormatRepository;
@@ -43,9 +43,7 @@ class IntlServiceProvider extends ServiceProvider
     protected function registerCountryRepository()
     {
         $this->app->singleton(CountryRepository::class, function ($app) {
-            $repository = new CountryRepository;
-            $repository->setDefaultLocale($app['config']['app.locale']);
-            $repository->setFallbackLocale($app['config']['app.fallback_locale']);
+            $repository = new CountryRepository($app['config']['app.locale'], $app['config']['app.fallback_locale']);
 
             return $repository;
         });
@@ -61,9 +59,7 @@ class IntlServiceProvider extends ServiceProvider
     protected function registerCurrencyRepository()
     {
         $this->app->singleton(CurrencyRepository::class, function ($app) {
-            $repository = new CurrencyRepository;
-            $repository->setDefaultLocale($app['config']['app.locale']);
-            $repository->setFallbackLocale($app['config']['app.fallback_locale']);
+            $repository = new CurrencyRepository($app['config']['app.locale'], $app['config']['app.fallback_locale']);
 
             return $repository;
         });
@@ -79,9 +75,7 @@ class IntlServiceProvider extends ServiceProvider
     protected function registerLanguageRepository()
     {
         $this->app->singleton(LanguageRepository::class, function ($app) {
-            $repository = new LanguageRepository;
-            $repository->setDefaultLocale($app['config']['app.locale']);
-            $repository->setFallbackLocale($app['config']['app.fallback_locale']);
+            $repository = new LanguageRepository($app['config']['app.locale'], $app['config']['app.fallback_locale']);
 
             return $repository;
         });
@@ -97,9 +91,7 @@ class IntlServiceProvider extends ServiceProvider
     protected function registerNumberRepository()
     {
         $this->app->singleton(NumberFormatRepository::class, function ($app) {
-            $repository = new NumberFormatRepository;
-            $repository->setDefaultLocale($app['config']['app.locale']);
-            $repository->setFallbackLocale($app['config']['app.fallback_locale']);
+            $repository = new NumberFormatRepository($app['config']['app.fallback_locale']);
 
             return $repository;
         });

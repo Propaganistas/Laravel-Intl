@@ -31,8 +31,7 @@ class Number extends Intl
      */
     public function format($value)
     {
-        $format = $this->get();
-        $formatter = new NumberFormatter($format);
+        $formatter = new NumberFormatter($this->data);
 
         return $formatter->format($value);
     }
@@ -45,10 +44,9 @@ class Number extends Intl
      */
     public function percent($value)
     {
-        $format = $this->get();
-        $formatter = new NumberFormatter($format, NumberFormatter::PERCENT);
+        $formatter = new NumberFormatter($this->data);
 
-        return $formatter->format($value);
+        return $formatter->format($value, ['style' => 'percent']);
     }
 
     /**
@@ -59,13 +57,9 @@ class Number extends Intl
      */
     public function parse($value)
     {
-        $format = $this->get(null);
-        $formatter = new NumberFormatter($format);
+        $formatter = new NumberFormatter($this->data);
 
-        // At time of writing, commerceguys/intl has number parsing still coupled to a currency. Parsing does
-        // succeed however,even though a value is provided without any currency. So let's just pass in
-        // a very rare currency to avoid unwanted formatting behavior. Sorry Cape Verdean Escudo!
-        return $formatter->parseCurrency($value, $currency = currency()->get('CVE'));
+        return $formatter->parse($value);
     }
 
     /**

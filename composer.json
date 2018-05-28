@@ -18,7 +18,8 @@
     "require": {
         "php": ">=5.5.0",
         "illuminate/container": ">=5.0,<5.7",
-        "commerceguys/intl": ">=0.7.3,<=0.7.5",
+        "commerceguys/intl": "^1.0.0",
+        "commerceguys/addressing": "^1.0.0",
         "jenssegers/date": "^3.2"
     },
     "require-dev": {
