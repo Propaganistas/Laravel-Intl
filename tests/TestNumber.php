@@ -17,7 +17,7 @@ class TestNumber extends TestCase
 
     public function setUp()
     {
-        require_once __DIR__ . '/../src/helpers.php';
+        require_once __DIR__.'/../src/helpers.php';
 
         parent::setUp();
     }
@@ -53,25 +53,12 @@ class TestNumber extends TestCase
     public function testLocaleCanBeTemporarilyChanged()
     {
         $this->app->setLocale('nl');
-        $number = Number::forLocale('en', function($country) {
+        $number = Number::usingLocale('en', function($country) {
             return Number::format(1234);
         });
 
         $this->assertEquals('nl', Number::getLocale());
         $this->assertEquals('1,234', $number);
-    }
-
-    public function testGet()
-    {
-        $number = Number::get();
-        $this->assertEquals('CommerceGuys\Intl\NumberFormat\NumberFormat', get_class($number));
-        $this->assertEquals('%', $number->getPercentSign());
-    }
-
-    public function testAll()
-    {
-        $number = Number::all();
-        $this->assertEmpty($number);
     }
 
     public function testFormat()
@@ -82,7 +69,7 @@ class TestNumber extends TestCase
 
     public function testPercent()
     {
-        $number = Number::percent(75);
+        $number = Number::percent('0.75');
         $this->assertEquals('75%', $number);
     }
 

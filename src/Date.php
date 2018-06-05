@@ -1,66 +1,66 @@
-<?php namespace Propaganistas\LaravelIntl;
+<?php
 
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Config;
-use Propaganistas\LaravelIntl\Base\LocaleCallback;
+namespace Propaganistas\LaravelIntl;
 
-class Date
+use Jenssegers\Date\Date as BaseDate;
+use Propaganistas\LaravelIntl\Contracts\Intl;
+
+class Date extends Intl
 {
-    use LocaleCallback;
-
-    /**
-     * @var \Jenssegers\Date\Date
-     */
-    protected $date;
-
-    /**
-     * Date constructor.
-     */
-    public function __construct()
-    {
-        $this->date = \Jenssegers\Date\Date::make();
-        $this->setLocale(App::getLocale());
-        $this->setFallbackLocale(Config::get('app.fallback_locale'));
-    }
-
     /**
      * Handle dynamic calls to the object.
      *
-     * @param  string  $method
-     * @param  array   $args
+     * @param string $method
+     * @param array $arguments
      * @return mixed
      */
-    public function __call($method, $args)
+    public function __call($method, $arguments)
     {
-        if (method_exists($this, '_' . $method)) {
-            return call_user_func_array([$this, '_' . $method], $args);
-        }
-
-        return call_user_func_array([$this->date, $method], $args);
+        return BaseDate::{$method}(...$arguments);
     }
 
     /**
-     * Spoofed setLocale method.
+     * Get the current locale.
      *
-     * @param string $locale
+     * @return string
+     */
+    public function getLocale()
+    {
+        return BaseDate::getLocale();
+    }
+
+    /**
+     * Set the current locale.
+     *
+     * @param $locale
      * @return $this
      */
-    public function _setLocale($locale)
+    public function setLocale($locale)
     {
-        $this->date->setLocale($locale);
+        BaseDate::setLocale($locale);
 
         return $this;
     }
 
     /**
-     * Spoofed setFallbackLocale method.
+     * Get the fallback locale.
      *
-     * @param string $locale
+     * @return string
+     */
+    public function getFallbackLocale()
+    {
+        return BaseDate::getFallbackLocale();
+    }
+
+    /**
+     * Set the fallback locale.
+     *
+     * @param $locale
      * @return $this
      */
-    public function _setFallbackLocale($locale)
+    public function setFallbackLocale($locale)
     {
-        $this->date->setFallbackLocale($locale);
+        BaseDate::setFallbackLocale($locale);
 
         return $this;
     }

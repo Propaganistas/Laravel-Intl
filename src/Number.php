@@ -1,86 +1,178 @@
-<?php namespace Propaganistas\LaravelIntl;
+<?php
+
+namespace Propaganistas\LaravelIntl;
 
 use CommerceGuys\Intl\Formatter\NumberFormatter;
-use CommerceGuys\Intl\NumberFormat\NumberFormat;
 use CommerceGuys\Intl\NumberFormat\NumberFormatRepository;
-use Propaganistas\LaravelIntl\Base\Intl;
-use ReflectionClass;
+use Illuminate\Support\Arr;
+use Propaganistas\LaravelIntl\Contracts\Intl;
 
 class Number extends Intl
 {
     /**
-     * @var \CommerceGuys\Intl\NumberFormat\NumberFormatRepository
+     * Array of localized number formatters.
+     *
+     * @var array
      */
-    protected $data;
+    protected $formatters;
 
     /**
-     * Number constructor.
+     * The current locale.
      *
-     * @param \CommerceGuys\Intl\NumberFormat\NumberFormatRepository $data
+     * @var string $locale
      */
-    public function __construct(NumberFormatRepository $data)
+    protected $locale;
+
+    /**
+     * The current locale.
+     *
+     * @var string $locale
+     */
+    protected $fallbackLocale;
+
+    /**
+     * Format a number.
+     *
+     * @param string|int|float $number
+     * @param array $options
+     * @return string
+     */
+    public function format($number, $options = [])
     {
-        $this->data = $data;
+        return $this->formatter()->format($number,
+            $this->mergeOptions($options)
+        );
     }
 
     /**
-     * Format an value in the given locale (or app locale if not specified).
+     * Format as percentage.
      *
-     * @param int|float $value
+     * @param string|int|float $number
+     * @param array $options
      * @return string
      */
-    public function format($value)
+    public function percent($number, $options = [])
     {
-        $formatter = new NumberFormatter($this->data);
-
-        return $formatter->format($value);
-    }
-
-    /**
-     * Format an value as percents in the given locale (or app locale if not specified).
-     *
-     * @param int|float $value
-     * @return string
-     */
-    public function percent($value)
-    {
-        $formatter = new NumberFormatter($this->data);
-
-        return $formatter->format($value, ['style' => 'percent']);
+        return $this->formatter()->format($number,
+            $this->mergeOptions($options, ['style' => 'percent'])
+        );
     }
 
     /**
      * Parse a localized number into native PHP format.
      *
-     * @param string|int|float $value
+     * @param string|int|float $number
+     * @param array $options
      * @return string|false
      */
-    public function parse($value)
+    public function parse($number, $options = [])
     {
-        $formatter = new NumberFormatter($this->data);
-
-        return $formatter->parse($value);
+        return $this->formatter()->parse($number,
+            $this->mergeOptions($options)
+        );
     }
 
     /**
-     * Get a localized entry.
+     * Get the current locale.
      *
-     * @param string|null $code
-     * @return mixed
+     * @return string
      */
-    public function get($code = null)
+    public function getLocale()
     {
-        return $this->data->get(null);
+        return $this->locale;
     }
 
     /**
-     * Get a localized list of entries, keyed by their code.
+     * Set the current locale.
      *
+     * @param $locale
+     * @return $this
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+
+        $this->load($locale, $this->getFallbackLocale());
+
+        return $this;
+    }
+
+    /**
+     * Get the fallback locale.
+     *
+     * @return string
+     */
+    public function getFallbackLocale()
+    {
+        return $this->fallbackLocale;
+    }
+
+    /**
+     * Set the fallback locale.
+     *
+     * @param $locale
+     * @return $this
+     */
+    public function setFallbackLocale($locale)
+    {
+        $this->fallbackLocale = $locale;
+
+        $this->load($this->getLocale(), $locale);
+
+        return $this;
+    }
+
+    /**
+     * Load the format repository for the given locale.
+     *
+     * @param string $locale
+     * @return void
+     */
+    protected function load($locale, $fallbackLocale)
+    {
+        $key = $this->getLocalesKey($locale, $fallbackLocale);
+
+        if (! isset($this->repositories[$key])) {
+            $this->formatters[$key] = new NumberFormatter(new NumberFormatRepository($fallbackLocale), ['locale' => $locale]);
+        }
+    }
+
+    /**
+     * Get the formatter's key.
+     *
+     * @param string|null $locale
+     * @param string|null $fallbackLocale
+     * @return string
+     */
+    protected function getLocalesKey($locale = null, $fallbackLocale = null)
+    {
+        return implode('|', [
+            $locale ?: $this->getLocale(),
+            $fallbackLocale ?: $this->getFallbackLocale(),
+        ]);
+    }
+
+    /**
+     * The current number formatter.
+     *
+     * @return \CommerceGuys\Intl\Formatter\NumberFormatter
+     */
+    protected function formatter()
+    {
+        return $this->formatters[$this->getLocalesKey()];
+    }
+
+    /**
+     * Merges the options array.
+     *
+     * @param array $options
+     * @param array $defaults
      * @return array
      */
-    public function all()
+    protected function mergeOptions(array $options, array $defaults = [])
     {
-        // Unsupported.
-        return [];
+        Arr::forget($options, 'locale');
+
+        return $defaults + $options;
     }
 }

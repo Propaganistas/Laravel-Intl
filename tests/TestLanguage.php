@@ -17,9 +17,14 @@ class TestLanguage extends TestCase
 
     public function setUp()
     {
-        require_once __DIR__ . '/../src/helpers.php';
+        require_once __DIR__.'/../src/helpers.php';
 
         parent::setUp();
+    }
+
+    protected function getEnvironmentSetUp($app)
+    {
+        $app->setBasePath(__DIR__ . '/..');
     }
 
     public function testHelper()
@@ -53,7 +58,7 @@ class TestLanguage extends TestCase
     public function testLocaleCanBeTemporarilyChanged()
     {
         $this->app->setLocale('nl');
-        $name = Language::forLocale('en', function($language) {
+        $name = Language::usingLocale('en', function($language) {
             return Language::name('nl');
         });
 
@@ -64,8 +69,7 @@ class TestLanguage extends TestCase
     public function testGet()
     {
         $language = Language::get('nl');
-        $this->assertEquals('CommerceGuys\Intl\Language\Language', get_class($language));
-        $this->assertEquals('nl', $language->getLanguageCode());
+        $this->assertEquals('Dutch', $language);
     }
 
     public function testAll()

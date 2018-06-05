@@ -18,7 +18,7 @@ class TestDate extends TestCase
 
     public function setUp()
     {
-        require_once __DIR__ . '/../src/helpers.php';
+        require_once __DIR__.'/../src/helpers.php';
 
         parent::setUp();
     }
@@ -55,7 +55,7 @@ class TestDate extends TestCase
     public function testLocaleCanBeTemporarilyChanged()
     {
         $this->app->setLocale('nl');
-        $date = Date::forLocale('en', function($currency) {
+        $date = Date::usingLocale('en', function($currency) {
             return Date::parse('August 31')->format('j F');
         });
 

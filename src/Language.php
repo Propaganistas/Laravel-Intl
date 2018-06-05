@@ -1,33 +1,127 @@
-<?php namespace Propaganistas\LaravelIntl;
+<?php
 
-use CommerceGuys\Intl\Language\LanguageRepository;
-use Propaganistas\LaravelIntl\Base\Intl;
+namespace Propaganistas\LaravelIntl;
+
+use Illuminate\Support\Arr;
+use Propaganistas\LaravelIntl\Contracts\Intl;
 
 class Language extends Intl
 {
     /**
-     * @var \CommerceGuys\Intl\Language\LanguageRepository
+     * Loaded localized country data.
+     *
+     * @var array
      */
     protected $data;
 
     /**
-     * Language constructor.
+     * The current locale.
      *
-     * @param \CommerceGuys\Intl\Language\LanguageRepository $data
+     * @var string $locale
      */
-    public function __construct(LanguageRepository $data)
+    protected $locale;
+
+    /**
+     * The current locale.
+     *
+     * @var string $locale
+     */
+    protected $fallbackLocale;
+
+    /**
+     * Get a localized record by key.
+     *
+     * @param string $key
+     * @return mixed
+     */
+    public function get($key)
     {
-        $this->data = $data;
+        return Arr::get($this->all(), $key);
     }
 
     /**
-     * Get the localized name for the specified language.
+     * Alias of get().
      *
-     * @param string $langCode
+     * @param string $key
      * @return string
      */
-    public function name($langCode)
+    public function name($key)
     {
-        return $this->get($langCode)->getName();
+        return $this->get($key);
+    }
+
+    /**
+     * Get all localized records.
+     *
+     * @return array
+     */
+    public function all()
+    {
+        return $this->data[$this->getLocale()] + $this->data[$this->getFallbackLocale()];
+    }
+
+    /**
+     * Get the current locale.
+     *
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * Set the current locale.
+     *
+     * @param $locale
+     * @return $this
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+
+        $this->load($locale);
+
+        return $this;
+    }
+
+    /**
+     * Get the fallback locale.
+     *
+     * @return string
+     */
+    public function getFallbackLocale()
+    {
+        return $this->fallbackLocale;
+    }
+
+    /**
+     * Set the fallback locale.
+     *
+     * @param $locale
+     * @return $this
+     */
+    public function setFallbackLocale($locale)
+    {
+        $this->fallbackLocale = $locale;
+
+        $this->load($locale);
+
+        return $this;
+    }
+
+    /**
+     * Load the data for the given locale.
+     *
+     * @param string $locale
+     * @return void
+     */
+    protected function load($locale)
+    {
+        if (! isset($this->data[$locale])) {
+            $path = base_path('vendor/umpirsky/locale-list/data/'.$locale.'/locales.php');
+
+            $this->data[$locale] = is_file($path) ? require $path : [];
+        }
     }
 }

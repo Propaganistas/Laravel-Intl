@@ -17,9 +17,14 @@ class TestCountry extends TestCase
 
     public function setUp()
     {
-        require_once __DIR__ . '/../src/helpers.php';
+        require_once __DIR__.'/../src/helpers.php';
 
         parent::setUp();
+    }
+
+    protected function getEnvironmentSetUp($app)
+    {
+        $app->setBasePath(__DIR__ . '/..');
     }
 
     public function testHelper()
@@ -53,19 +58,12 @@ class TestCountry extends TestCase
     public function testLocaleCanBeTemporarilyChanged()
     {
         $this->app->setLocale('nl');
-        $name = Country::forLocale('en', function($country) {
+        $name = Country::usingLocale('en', function($country) {
             return Country::name('BE');
         });
 
         $this->assertEquals('nl', Country::getLocale());
         $this->assertEquals('Belgium', $name);
-    }
-
-    public function testGet()
-    {
-        $country = Country::get('BE');
-        $this->assertEquals('CommerceGuys\Addressing\Country\Country', get_class($country));
-        $this->assertEquals('BE', $country->getCountryCode());
     }
 
     public function testAll()
@@ -81,11 +79,5 @@ class TestCountry extends TestCase
     {
         $country = Country::name('BE');
         $this->assertEquals('Belgium', $country);
-    }
-
-    public function testCurrency()
-    {
-        $currency = Country::currency('BE');
-        $this->assertEquals('EUR', $currency);
     }
 }

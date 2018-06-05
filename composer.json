@@ -16,11 +16,12 @@
         }
     ],
     "require": {
-        "php": ">=5.5.0",
-        "illuminate/container": ">=5.0,<5.7",
-        "commerceguys/intl": "^1.0.0",
-        "commerceguys/addressing": "^1.0.0",
-        "jenssegers/date": "^3.2"
+        "php": ">=7.0",
+        "laravel/framework": "5.6.*",
+        "commerceguys/intl": "^1.0",
+        "jenssegers/date": "^3.2",
+        "umpirsky/country-list": "^2.0",
+        "umpirsky/locale-list": "^1.0"
     },
     "require-dev": {
         "orchestra/testbench": "*",

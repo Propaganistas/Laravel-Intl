@@ -17,7 +17,7 @@ class TestCurrency extends TestCase
 
     public function setUp()
     {
-        require_once __DIR__ . '/../src/helpers.php';
+        require_once __DIR__.'/../src/helpers.php';
 
         parent::setUp();
     }
@@ -55,7 +55,7 @@ class TestCurrency extends TestCase
     public function testLocaleCanBeTemporarilyChanged()
     {
         $this->app->setLocale('nl');
-        $name = Currency::forLocale('en', function($currency) {
+        $name = Currency::usingLocale('en', function($currency) {
             return Currency::name('USD');
         });
 
@@ -65,8 +65,8 @@ class TestCurrency extends TestCase
 
     public function testGet()
     {
-        $currency = Currency::get('EUR');
-        $this->assertEquals('CommerceGuys\Intl\Currency\Currency', get_class($currency));
+        $currency = Currency::get('USD');
+        $this->assertEquals('US Dollar', $currency);
     }
 
     public function testAll()
