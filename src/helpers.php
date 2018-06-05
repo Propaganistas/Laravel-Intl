@@ -5,7 +5,7 @@ if (!function_exists('country')) {
      * Get a localized country name.
      *
      * @param string|null $countryCode
-     * @return \CommerceGuys\Intl\Country\Country|string
+     * @return \CommerceGuys\Addressing\Country\Country|string
      */
     function country($countryCode = null)
     {

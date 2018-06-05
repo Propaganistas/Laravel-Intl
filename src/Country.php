@@ -1,19 +1,19 @@
 <?php namespace Propaganistas\LaravelIntl;
 
-use CommerceGuys\Intl\Country\CountryRepository;
+use CommerceGuys\Addressing\Country\CountryRepository;
 use Propaganistas\LaravelIntl\Base\Intl;
 
 class Country extends Intl
 {
     /**
-     * @var \CommerceGuys\Intl\Country\CountryRepository
+     * @var \CommerceGuys\Addressing\Country\CountryRepository
      */
     protected $data;
 
     /**
      * Country constructor.
      *
-     * @param \CommerceGuys\Intl\Country\CountryRepository $data
+     * @param \CommerceGuys\Addressing\Country\CountryRepository $data
      */
     public function __construct(CountryRepository $data)
     {

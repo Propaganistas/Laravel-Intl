@@ -1,7 +1,7 @@
 <?php namespace Propaganistas\LaravelIntl;
 
 use CommerceGuys\Intl\Currency\CurrencyRepository;
-use CommerceGuys\Intl\Formatter\NumberFormatter;
+use CommerceGuys\Intl\Formatter\CurrencyFormatter;
 use CommerceGuys\Intl\NumberFormat\NumberFormatRepository;
 use Propaganistas\LaravelIntl\Base\Intl;
 
@@ -60,11 +60,9 @@ class Currency extends Intl
      */
     public function format($value, $currencyCode)
     {
-        $currency = $this->get($currencyCode);
-        $format = $this->formatData->get(null);
-        $formatter = new NumberFormatter($format, NumberFormatter::CURRENCY);
+        $formatter = new CurrencyFormatter($this->formatData, $this->data);
 
-        return $formatter->formatCurrency($value, $currency);
+        return $formatter->format($value, $currencyCode);
     }
 
     /**
@@ -77,11 +75,9 @@ class Currency extends Intl
      */
     public function formatAccounting($value, $currencyCode)
     {
-        $currency = $this->get($currencyCode);
-        $format = $this->formatData->get(null);
-        $formatter = new NumberFormatter($format, NumberFormatter::CURRENCY_ACCOUNTING);
+        $formatter = new CurrencyFormatter($this->formatData, $this->data);
 
-        return $formatter->formatCurrency($value, $currency);
+        return $formatter->format($value, $currencyCode, ['style' => 'accounting']);
     }
 
     /**
@@ -93,11 +89,9 @@ class Currency extends Intl
      */
     public function parse($value, $currencyCode)
     {
-        $currency = $this->get($currencyCode);
-        $format = $this->formatData->get(null);
-        $formatter = new NumberFormatter($format, NumberFormatter::CURRENCY);
+        $formatter = new CurrencyFormatter($this->formatData, $this->data);
 
-        return $formatter->parseCurrency($value, $currency);
+        return $formatter->parse($value, $currencyCode);
     }
 
     /**
