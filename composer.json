@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": ">=7.0",
-        "laravel/framework": "5.6.*",
+        "laravel/framework": ">=5.0,<5.7",
         "commerceguys/intl": "^1.0",
         "jenssegers/date": "^3.2",
         "umpirsky/country-list": "^2.0",
