@@ -54,7 +54,7 @@ class Currency extends Intl
     /**
      * Format an value for the given currency.
      *
-     * @param int|float $value
+     * @param string|int|float $value
      * @param string    $currencyCode
      * @return string
      */
@@ -71,7 +71,7 @@ class Currency extends Intl
      * Format an value for the given currency in accounting
      * format.
      *
-     * @param int|float $value
+     * @param string|int|float $value
      * @param string    $currencyCode
      * @return string
      */

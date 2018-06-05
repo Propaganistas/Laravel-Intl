@@ -26,7 +26,7 @@ class Number extends Intl
     /**
      * Format an value in the given locale (or app locale if not specified).
      *
-     * @param int|float $value
+     * @param string|int|float $value
      * @return string
      */
     public function format($value)
@@ -40,7 +40,7 @@ class Number extends Intl
     /**
      * Format an value as percents in the given locale (or app locale if not specified).
      *
-     * @param int|float $value
+     * @param string|int|float $value
      * @return string
      */
     public function percent($value)
