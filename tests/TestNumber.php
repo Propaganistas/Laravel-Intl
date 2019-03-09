@@ -47,7 +47,9 @@ class TestNumber extends TestCase
     {
         Number::setLocale('foo');
         Number::setFallbackLocale('fr');
-        $this->assertEquals('1 234', Number::format(1234));
+        $number = Number::format(1234);
+
+        $this->assertEquals('1 234', $number);
     }
 
     public function testLocaleCanBeTemporarilyChanged()

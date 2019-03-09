@@ -2,8 +2,6 @@
 
 use Illuminate\Foundation\Events\LocaleUpdated;
 use Illuminate\Support\ServiceProvider;
-use Jenssegers\Date\Date;
-use Jenssegers\Date\DateServiceProvider;
 use Punic\Data as Punic;
 
 class IntlServiceProvider extends ServiceProvider
@@ -107,8 +105,6 @@ class IntlServiceProvider extends ServiceProvider
      */
     protected function registerDate()
     {
-        $this->app->register(DateServiceProvider::class);
-
         require __DIR__.'/Macros/Carbon.php';
     }
 
@@ -124,8 +120,5 @@ class IntlServiceProvider extends ServiceProvider
 
         Punic::setDefaultLocale($locale);
         Punic::setFallbackLocale($fallbackLocale);
-
-        Date::setLocale($locale);
-        Date::setFallbackLocale($fallbackLocale);
     }
 }

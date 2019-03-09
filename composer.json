@@ -17,10 +17,10 @@
     ],
     "require": {
         "php": ">=7.1.3",
-        "illuminate/events": ">=5.7,<5.9",
-        "illuminate/support": ">=5.7,<5.9",
+        "illuminate/events": ">=5.8,<5.9",
+        "illuminate/support": ">=5.8,<5.9",
+        "nesbot/carbon": "^2.0",
         "commerceguys/intl": "^1.0.1",
-        "jenssegers/date": "^3.4",
         "umpirsky/country-list": "^2.0",
         "umpirsky/locale-list": "^1.0",
         "punic/punic": "^3.1"

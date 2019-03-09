@@ -106,7 +106,7 @@ currency()->parse('€ 1.234,50'); // 1234.5
 
 #### Date
 
-The package installs [`jenssegers/date`](https://github.com/jenssegers/date) to handle localization of dates. Use `Propaganistas\LaravelIntl\Carbon`, `Jenssegers\Date\Date` or the helper function (`carbon()`) as if it were [Carbon\Carbon](http://carbon.nesbot.com). Everything will be localized automatically.
+Just use `Illuminate\Support\Facades\Date`.
 
 Additional methods are also available to output localized common date formats. E.g. `toShortDateString()`:
 
@@ -114,9 +114,9 @@ Additional methods are also available to output localized common date formats. E
 * Locale "nl": 31-01-2018
 
 ````php
-use Propaganistas\LaravelIntl\Carbon;
+use Illuminate\Support\Facades\Date;
 
-$date = Carbon::now(); // or carbon()->now()
+$date = Date::now(); // or carbon()->now()
 
 $date->toShortDateString();
 $date->toMediumDateString();

@@ -1,6 +1,6 @@
 <?php
 
-use Jenssegers\Date\Date;
+use Illuminate\Support\Facades\Date;
 
 if (! function_exists('country')) {
     /**
@@ -47,7 +47,7 @@ if (! function_exists('carbon')) {
      *
      * @param  string $time
      * @param  string|DateTimeZone $timezone
-     * @return \Jenssegers\Date\Date|string
+     * @return \Illuminate\Support\DateFactory|string
      */
     function carbon($time = null, $timezone = null)
     {

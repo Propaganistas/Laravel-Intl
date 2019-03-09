@@ -47,9 +47,12 @@ class TestCurrency extends TestCase
 
     public function testFallbackLocaleIsUsed()
     {
-        $currency = Currency::setLocale('foo');
-        $currency->setFallbackLocale('fr');
-        $this->assertEquals('1 234,00 €', $currency->format(1234, 'EUR'));
+        Currency::setLocale('foo');
+        Currency::setFallbackLocale('fr');
+
+        $currency = Currency::format(1234, 'EUR');
+
+        $this->assertEquals('1 234,00 €', $currency);
     }
 
     public function testLocaleCanBeTemporarilyChanged()
