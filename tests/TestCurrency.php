@@ -52,7 +52,7 @@ class TestCurrency extends TestCase
 
         $currency = Currency::format(1234, 'EUR');
 
-        $this->assertEquals('1 234,00 €', $currency);
+        $this->assertEquals('1 234,00 €', $currency);
     }
 
     public function testLocaleCanBeTemporarilyChanged()
